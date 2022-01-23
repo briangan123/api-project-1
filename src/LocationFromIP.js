@@ -11,14 +11,18 @@ export class LocationFromIP extends LitElement {
     super();
     this.UserIpInstance = new UserIP();
     this.locationEndpoint = 'https://freegeoip.app/json/';
-    this.long = 10.305385;
-    this.lat = 77.923029;
+    this.long = null;
+    this.lat = null;
   }
 
   static get properties() {
-    return {};
+    return {
+      long: {type: Number},
+      lat: {type: Number},
+    };
   }
 
+  // not sure what this function does
   firstUpdated(changedProperties) {
     if (super.firstUpdated) {
       super.firstUpdated(changedProperties);
@@ -26,6 +30,7 @@ export class LocationFromIP extends LitElement {
     this.getGEOIPData();
   }
 
+  // I'm guessing this function calls the API to set the long and lat of the map
   async getGEOIPData() {
     const IPClass = new UserIP();
     const userIPData = await IPClass.updateUserIP();
@@ -38,10 +43,13 @@ export class LocationFromIP extends LitElement {
       })
       .then(data => {
         console.log(data);
+        this.long = data.long;
+        this.lat = data.lat;
         return data;
       });
   }
 
+  // styling for the iframe
   static get styles() {
     return [
       css`
