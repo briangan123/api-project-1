@@ -1,3 +1,4 @@
+/* eslint-disable lit-a11y/anchor-is-valid */
 // dependencies / things imported
 import { LitElement, html, css } from 'lit';
 import { UserIP } from './UserIP.js';
@@ -11,7 +12,7 @@ export class LocationFromIP extends LitElement {
     super();
     this.UserIpInstance = new UserIP();
     this.locationEndpoint = 'https://freegeoip.app/json/';
-    this.long =  null;
+    this.long = null;
     this.lat = null;
   }
 
@@ -69,9 +70,19 @@ export class LocationFromIP extends LitElement {
     // this means you can make new variables and then bind them this way if you like
   
     const url = `https://maps.google.com/maps?q=${this.lat},${this.long}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
-    console.log(`long: `, `${this.long}\n`,  `lat: `,  `${this.lat}`);
-    return html`<iframe title="Where you are" src="${url}"></iframe> `;
+    // const url1 = `https://www.google.com/maps/${this.lat},${this.long},14z`;
+    return html`
+    <iframe title="Where you are" src="${url}"></iframe>
+    <ul>
+      <a
+          href = "https://www.google.com/maps/@${this.lat},${this.long},14z"> Open in Google Maps
+       </a>
+    </ul> `
+    ;
   }
+
+
+
 }
 
 customElements.define(LocationFromIP.tag, LocationFromIP);
